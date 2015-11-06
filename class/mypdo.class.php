@@ -174,7 +174,41 @@ class mypdo extends PDO{
     	return $data;
     }
     
-
+    public function insert_enfant_admin($tab)
+    {
+     	
+    	$errors         = array();  	
+    	$data 			= array(); 		
+    
+    	// attention le mot de passe est en clair tant que le mail de confirmation  n'est pas envoyé
+    	$requete='INSERT INTO enfant (IdEnfant,NomEnfant,PrenomEnfant,AgeEnfant,Commentaire)
+		VALUES ('
+    			.$this->connexion ->quote($tab['nom']) .','
+    			.$this->connexion ->quote($tab['prenom']) .','
+    			.$this->connexion ->quote($tab['age']) .','
+    			.$this->connexion ->quote($tab['commEnfant'])
+    		.');';
+    
+    
+    
+    	$nblignes=$this->connexion -> exec($requete);
+    	if ($nblignes !=1)
+    	{
+    		$errors['requete']='Pbs insertion enfant :'.$requete;
+    	}
+    
+    
+    
+    	if ( ! empty($errors)) {
+    		$data['success'] = false;
+    		$data['errors']  = $errors;
+    	} else {
+    
+    		$data['success'] = true;
+    		$data['message'] = 'Insertion enfant ok!';
+    	}
+    	return $data;
+    }
     
     public function liste_famille()
     {
