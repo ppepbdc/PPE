@@ -505,12 +505,8 @@ class controleur {
 			$titreform = 'Formulaire ajout famille';
 			$libelbutton = 'Ajouter';
 		}
-		if ($type == 'Demand') {
-			$titreform = 'Formulaire Demande Inscription famille';
-			$libelbutton = 'Soumettre';
-		}
 		if ($type == 'Supp') {
-			$titreform = 'Formulaire Suppression inscription';
+			$titreform = 'Formulaire Suppression inscription famille';
 			$libelbutton = 'Supprimer';
 		}
 		if ($type == 'Modif') {
@@ -582,9 +578,6 @@ class controleur {
 				if (isset ( $row->tel23 )) {
 					$tel23= $row->tel23;
 				}
-				if (isset ( $row->metier)){
-					$metier= $row->metier;
-				}
 				if (isset ( $row->fonction2 )) {
 					if($row->fonction2=='pere')
 					{
@@ -607,7 +600,7 @@ class controleur {
 			<article >
 				<h3>' . $titreform . '</h3>
 				<form id="formfamille" method="post" >';
-		if ($type == 'Ajout' || $type == 'Demand') {
+		if ($type == 'Ajout') {
 			$vmp=$this->genererMDP();
 			$form = $form . '
 					<div >
@@ -637,7 +630,6 @@ class controleur {
 					<input type="text" name="tel11" id="tel11" placeholder="Tel fixe" value="' . $tel11 . '" required/>
 					<input type="text" name="tel12" id="tel12" placeholder="Tel portable" value="' . $tel12 . '" />
 					<input type="text" name="tel13" id="tel13" placeholder="Tel travail" value="' . $tel13 . '" /></br>
-					<input type="text" name="metier" id="metier" placeholder="Indication métier" value"'. $metier . '"/></br>
 					
 					<input type="radio" name="rbfonction1" id="rbp"  value="rbp" ' . $checkpere1 . ' required/>Père
 					<input type="radio" name="rbfonction1" id="rbm"  value="rbm" ' . $checkmere1 . 'required/>Mere
@@ -645,16 +637,16 @@ class controleur {
 					<input type="text" name="fonction1" id="fonction1" placeholder="Fonction representant legal 1" value="' . $autre1 . '" /></br></br>
 
 					Représentant légal 2</br></br>
-					<input type="text" name="nom2" id="nom2" placeholder="Nom representant legal 2" value="' . $nom2 . '" />
-					<input type="text" name="prenom2" id="prenom2" placeholder="Prenom representant legal 2" value="' . $prenom2 . '" /></br>
+					<input type="text" name="nom2" id="nom2" placeholder="Nom representant legal 2" value="' . $nom2 . '" required />
+					<input type="text" name="prenom2" id="prenom2" placeholder="Prenom representant legal 2" value="' . $prenom2 . '" required/></br>
 					<input type="text" name="adresse21" id="adresse21" placeholder="Adresse" value="' . $adresse21 . '" />
-					<input type="text" name="adresse22" id="adresse22" placeholder="Complément Adresse" value="' . $adresse22 . '" /></br>
-					<input type="text" name="cp2" id="cp2" placeholder="Code Postal" value="' . $cp2 . '" />
-					<input type="text" name="ville2" id="ville2" placeholder="Ville" value="' . $ville2 . '" /></br>
-					<input type="text" name="mail2" id="mail2" placeholder="mail" value="' . $mail2 . '" /></br>
-					<input type="text" name="tel21" id="tel21" placeholder="Tel fixe" value="' . $tel21 . '" />
-					<input type="text" name="tel22" id="tel22" placeholder="Tel portable" value="' . $tel22 . '" />
-					<input type="text" name="tel23" id="tel23" placeholder="Tel travail" value="' . $tel23 . '" /></br>
+					<input type="text" name="adresse22" id="adresse22" placeholder="Complément Adresse" value="' . $adresse22 . '" required/></br>
+					<input type="text" name="cp2" id="cp2" placeholder="Code Postal" value="' . $cp2 . '" required/>
+					<input type="text" name="ville2" id="ville2" placeholder="Ville" value="' . $ville2 . '" required/></br>
+					<input type="text" name="mail2" id="mail2" placeholder="mail" value="' . $mail2 . '" required/></br>
+					<input type="text" name="tel21" id="tel21" placeholder="Tel fixe" value="' . $tel21 . '" required/>
+					<input type="text" name="tel22" id="tel22" placeholder="Tel portable" value="' . $tel22 . '" required/>
+					<input type="text" name="tel23" id="tel23" placeholder="Tel travail" value="' . $tel23 . '" required/></br>
 					
 					<input type="radio" name="rbfonction2" id="rbp"  value="rbp" ' . $checkpere2 . ' />Père
 					<input type="radio" name="rbfonction2" id="rbm"  value="rbm" ' . $checkmere2 . '/>Mere
@@ -695,7 +687,6 @@ class controleur {
 		var $url="ajax/valide_ajout_famille.php";
 		if($("#submit").prop("value")=="Modifier"){$url="ajax/valide_modif_famille.php";}
 		if($("#submit").prop("value")=="Supprimer"){$url="ajax/valide_supp_famille.php";}
-		if($("#submit").prop("value")=="Soumettre"){$url="ajax/valide_demand_famille.php";}
 		if($("#formfamille").valid())
 		{
 			$fonction1="pere";
@@ -882,6 +873,33 @@ class controleur {
 		$retour = $retour . '</tbody></table></form></article>';
 		return $retour;
 	}
+	
+	public function retourne_formulaire_enfant($type) {
+		$form = '';		
+		$nom = '';
+		$prenom = '';
+		$commentaire = '';
+		
+		$form = '<article >
+				<h3>Formulaire enfant</h3>
+				<form id="formenfant" method="post" >
+					<br><input type="text" name="nom" id="nom" placeholder="Nom de l\'enfant" value="' . $nom . '" required />
+					<input type="text" name="prenom" id="prenom" placeholder="Prenom de l\'enfant" value="' . $prenom . '" required/></br>
+					<br><input type="textarea" name="commEnfant" id="commEnfant" placeholder="Problèmes de santé, allergies...   " value="'. $commentaire . '"</br></br>
+					
+					<br><input type="submit" name="inscription" id="inscription"  class="button" value="Inscrire" />
+				</form>
+					
+				</article>
+				'; 
+				
+				
+		return $form;
+		
+		
+	}
+		
 }
+
 
 ?>

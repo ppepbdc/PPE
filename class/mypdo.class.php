@@ -1,9 +1,9 @@
 <?php
 class mypdo extends PDO{
 
-    private $PARAM_hote='192.168.226.100'; // le chemin vers le serveur
-    private $PARAM_utilisateur='admin'; // nom d'utilisateur pour se connecter
-    private $PARAM_mot_passe='admin'; // mot de passe de l'utilisateur pour se connecter
+    private $PARAM_hote='localhost'; // le chemin vers le serveur
+    private $PARAM_utilisateur='root'; // nom d'utilisateur pour se connecter
+    private $PARAM_mot_passe=''; // mot de passe de l'utilisateur pour se connecter
     private $PARAM_nom_bd='alae';
     
 	private $connexion;

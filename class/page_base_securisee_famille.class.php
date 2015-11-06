@@ -16,12 +16,8 @@ class page_base_securisee_famille extends page_base {
 
 			<li><a href="">Gestion des enfants </a>
 				<ul>
-					<li><a href="">Modifier mot de passe familial</a></li>
-					<li><a href="">Modifier mes informations personnelles</a></li>
-					<li><a href="">Consulter mes inscriptions</a></li>
-					<li><a href="">Inscrire un enfant</a></li>
-					<li><a href="">Modifier une inscription enfant </a></li>
-					<li><a href="">Supprimer une inscription enfant</a></li>
+					<li><a href="ajout_enfant.php">Inscrire un enfant</a></li>
+					<li><a href="suppr_enfant.php">Supprimer un enfant</a></li>
 				</ul>
 			</li>
 	
